@@ -24,11 +24,27 @@ CalRem reads directly from your Apple Calendar and Reminders — no new data sto
 
 ## Screenshots
 
-| List View | Widgets | Onboarding |
-|-----------|---------|------------|
-| ![List](screenshots/list-light.png) | ![Widgets](screenshots/widgets-light.png) | ![Onboarding](screenshots/onboarding.png) |
+### List View
+<img src="https://github.com/parth49patel/Calendars-and-Reminders/blob/main/CalRem/Assets.xcassets/list.imageset/list.png" width="200"/>
 
-> Screenshots shown at iPhone 16 Pro Max (1290×2796). Both light and dark mode supported.
+---
+
+### Onboarding
+<p float="left">
+  <img src="https://github.com/parth49patel/Calendars-and-Reminders/blob/main/CalRem/Assets.xcassets/welcome.imageset/welcome.png" width="200"/>
+  <img src="https://github.com/parth49patel/Calendars-and-Reminders/blob/main/CalRem/Assets.xcassets/features.imageset/features.png" width="200"/>
+  <img src="https://github.com/parth49patel/Calendars-and-Reminders/blob/main/CalRem/Assets.xcassets/permission.imageset/permission.png" width="200"/>
+  <img src="https://github.com/parth49patel/Calendars-and-Reminders/blob/main/CalRem/Assets.xcassets/allset.imageset/allset.png" width="200"/>
+</p>
+
+---
+
+### Widgets
+
+<p float="left">
+  <img src="https://github.com/parth49patel/Calendars-and-Reminders/blob/main/CalRem/Assets.xcassets/widget-1.imageset/widget-1.png" width="200"/>
+  <img src="https://github.com/parth49patel/Calendars-and-Reminders/blob/main/CalRem/Assets.xcassets/widget-2.imageset/widget-2.png" width="200"/>
+</p>
 
 ---
 
