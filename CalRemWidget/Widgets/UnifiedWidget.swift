@@ -60,19 +60,20 @@ struct UnifiedWidgetEntryView: View {
 	@Environment(\.widgetFamily) var family
 	var maxItems: Int {
 		switch family {
+		case .systemLarge: return 8
 		case .accessoryRectangular: return 2
 		default: return 4
 		}
 	}
 	
-	private var allItemsDone: Bool {
-		entry.items.allSatisfy { item in
-			switch item {
-				case .event(let event) : return event.endDate < Date.now
-				case .reminder(let reminder): return reminder.isCompleted
-			}
-		}
-	}
+//	private var allItemsDone: Bool {
+//		entry.items.allSatisfy { item in
+//			switch item {
+//				case .event(let event) : return event.endDate < Date.now
+//				case .reminder(let reminder): return reminder.isCompleted
+//			}
+//		}
+//	}
 	
 	var body: some View {
 		switch family {
@@ -81,17 +82,19 @@ struct UnifiedWidgetEntryView: View {
 			default:
 				Group {
 					if !entry.permissionGranted {
-						ContentUnavailableView("Permission Not Granted", systemImage: "lock", description: Text("Calendar and Reminder access needed."))
-					} else if allItemsDone {
-						allDoneView
-					} else if entry.items.isEmpty {
+						ContentUnavailableView("Access Required", systemImage: "lock", description: Text("Calendar and Reminder access needed."))
+					}
+//					else if allItemsDone {
+//						allDoneView
+//					}
+					else if entry.items.isEmpty {
 						emptyItem
 					} else {
 						VStack(alignment: .leading, spacing: 5) {
 							HStack(alignment: .center) {
 								Text(Date.now.formatted(date: .abbreviated, time: .omitted))
 								Spacer()
-								Text("\(entry.items.count) items")
+								Text("^[\(entry.items.count) items](inflect: true)")
 							}
 							.font(.system(size: 14, weight: .bold, design: .rounded))
 							.foregroundStyle(.primary.opacity(0.6))
@@ -134,7 +137,7 @@ struct UnifiedWidgetEntryView: View {
 							.padding(.vertical, 2)
 							.background(.accent.opacity(0.2), in: Capsule())
 					} else {
-						Text(event.startDate..<event.endDate, format: .interval.hour().minute())
+						Text(event.startDate.formatted(date: .omitted, time: .shortened))
 							.font(.system(size: 12, weight: .medium, design: .rounded))
 							.foregroundStyle(.accent)
 							.padding(.horizontal, 6)
@@ -185,39 +188,39 @@ struct UnifiedWidgetEntryView: View {
 	
 	private var emptyItem: some View {
 		VStack(spacing: 6) {
-			Image(systemName: "sparkle")
-				.font(.system(size: 44, weight: .medium))
-				.foregroundStyle(.accent)
-			Text("All clear today")
-				.font(.system(size: 20, weight: .semibold, design: .rounded))
-				.foregroundStyle(.primary)
-			Text("Nothing scheduled")
-				.font(.system(size: 16, weight: .medium, design: .rounded))
-				.foregroundStyle(.secondary)
-		}
-		.frame(maxWidth: .infinity, maxHeight: .infinity)
-	}
-	
-	private var allDoneView: some View {
-		VStack(spacing: 6) {
 			Image(systemName: "checkmark.circle.fill")
 				.font(.system(size: 44, weight: .medium))
 				.foregroundStyle(.green)
 			Text("All done!")
 				.font(.system(size: 20, weight: .semibold, design: .rounded))
 				.foregroundStyle(.primary)
-			Text("No more events/reminders left to do!")
+			Text("No more events/reminders for today.")
 				.font(.system(size: 16, weight: .medium, design: .rounded))
 				.foregroundStyle(.secondary)
 		}
 		.frame(maxWidth: .infinity, maxHeight: .infinity)
 	}
 	
+//	private var allDoneView: some View {
+//		VStack(spacing: 6) {
+//			Image(systemName: "checkmark.circle.fill")
+//				.font(.system(size: 44, weight: .medium))
+//				.foregroundStyle(.green)
+//			Text("All done!")
+//				.font(.system(size: 20, weight: .semibold, design: .rounded))
+//				.foregroundStyle(.primary)
+//			Text("No more events/reminders for today.")
+//				.font(.system(size: 16, weight: .medium, design: .rounded))
+//				.foregroundStyle(.secondary)
+//		}
+//		.frame(maxWidth: .infinity, maxHeight: .infinity)
+//	}
+	
 	private var accessoryRectangleView: some View {
 		VStack(alignment: .leading, spacing: 3) {
 			if entry.items.isEmpty {
-				Label("All Completed", systemImage: "checkmark.circle.fill")
-					.font(.system(size: 12, weight: .semibold, design: .rounded))
+				Label("All done!", systemImage: "checkmark.circle.fill")
+					.font(.system(size: 16, weight: .semibold, design: .rounded))
 			} else {
 				ForEach(entry.items.prefix(3)) { item in
 					HStack(spacing: 6) {
@@ -231,7 +234,7 @@ struct UnifiedWidgetEntryView: View {
 								.buttonStyle(.plain)
 						}
 						Text(item.title)
-							.font(.system(size: 16, weight: .medium, design: .rounded))
+							.font(.system(size: 16, weight: .semibold, design: .rounded))
 							.lineLimit(1)
 					}
 				}
@@ -248,11 +251,11 @@ struct UnifiedWidget: Widget {
 	var body: some WidgetConfiguration {
 		StaticConfiguration(kind: kind, provider: UnifiedWidgetProvider()) { entry in
 			UnifiedWidgetEntryView(entry: entry)
-				.containerBackground(Color(.secondarySystemFill), for: .widget)
+				.containerBackground(.ultraThickMaterial, for: .widget)
 		}
 		.configurationDisplayName("Today's Timeline")
 		.description("A unified view of your upcoming events and reminders.")
-		.supportedFamilies([.systemMedium, .accessoryRectangular])
+		.supportedFamilies([.systemMedium, .systemLarge, .accessoryRectangular])
 	}
 }
 

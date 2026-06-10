@@ -16,12 +16,10 @@
 		5118ABEE2FAAC9B800D8E9CF /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5118ABED2FAAC9B800D8E9CF /* ListView.swift */; };
 		5118ABF02FAACFAE00D8E9CF /* EventRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5118ABEF2FAACFAE00D8E9CF /* EventRow.swift */; };
 		5118ABF22FAAD0FA00D8E9CF /* ReminderRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5118ABF12FAAD0FA00D8E9CF /* ReminderRow.swift */; };
-		5118AC442FAECF5700D8E9CF /* ReminderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5118AC432FAECF5700D8E9CF /* ReminderModel.swift */; };
-		5118AC462FAECF6000D8E9CF /* EventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5118AC452FAECF6000D8E9CF /* EventModel.swift */; };
 		5118AD562FB0C05000D8E9CF /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5118AD552FB0C05000D8E9CF /* MockData.swift */; };
 		5118AD582FB225FF00D8E9CF /* ReminderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5118AD572FB225FF00D8E9CF /* ReminderView.swift */; };
 		5118AD5A2FB25F8600D8E9CF /* EventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5118AD592FB25F8600D8E9CF /* EventView.swift */; };
-		5118AD5C2FB26D6500D8E9CF /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5118AD5B2FB26D6200D8E9CF /* Enums.swift */; };
+		5118AD5C2FB26D6500D8E9CF /* Enums+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5118AD5B2FB26D6200D8E9CF /* Enums+Extensions.swift */; };
 		5118AD642FB2B90200D8E9CF /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5118AD632FB2B90200D8E9CF /* WidgetKit.framework */; };
 		5118AD662FB2B90200D8E9CF /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5118AD652FB2B90200D8E9CF /* SwiftUI.framework */; };
 		5118AD712FB2B90400D8E9CF /* CalRemWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 5118AD612FB2B90200D8E9CF /* CalRemWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -35,11 +33,19 @@
 		5118AD912FB3AFDF00D8E9CF /* ToggleReminderIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5118AD902FB3AFDF00D8E9CF /* ToggleReminderIntent.swift */; };
 		5118AD922FB3AFDF00D8E9CF /* ToggleReminderIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5118AD902FB3AFDF00D8E9CF /* ToggleReminderIntent.swift */; };
 		5118AD932FB3EF4D00D8E9CF /* UnifiedWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5118AD842FB3A40200D8E9CF /* UnifiedWidget.swift */; };
-		5118AD9C2FB75A0F00D8E9CF /*   .swift in Sources */ = {isa = PBXBuildFile; fileRef = 5118AD9B2FB75A0F00D8E9CF /*   .swift */; };
-		5118AD9D2FB75A0F00D8E9CF /*   .swift in Sources */ = {isa = PBXBuildFile; fileRef = 5118AD9B2FB75A0F00D8E9CF /*   .swift */; };
+		5118AD9C2FB75A0F00D8E9CF /* EventKitDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5118AD9B2FB75A0F00D8E9CF /* EventKitDataService.swift */; };
+		5118AD9D2FB75A0F00D8E9CF /* EventKitDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5118AD9B2FB75A0F00D8E9CF /* EventKitDataService.swift */; };
 		5118AD9F2FB764AD00D8E9CF /* WeekGlanceWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5118AD9E2FB764AD00D8E9CF /* WeekGlanceWidget.swift */; };
 		5118ADA02FB764AD00D8E9CF /* WeekGlanceWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5118AD9E2FB764AD00D8E9CF /* WeekGlanceWidget.swift */; };
-		5118AE222FBCA92100D8E9CF /* NotificationSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5118AE212FBCA92100D8E9CF /* NotificationSelectionView.swift */; };
+		5148D69B2FBD3A9500A0186A /* Enums+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5118AD5B2FB26D6200D8E9CF /* Enums+Extensions.swift */; };
+		5148D6A02FBFEAB900A0186A /* FocusWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5148D69F2FBFEAB900A0186A /* FocusWidget.swift */; };
+		5148D6A12FBFEAB900A0186A /* FocusWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5148D69F2FBFEAB900A0186A /* FocusWidget.swift */; };
+		5148D6A32FC0D78300A0186A /* Align.icon in Resources */ = {isa = PBXBuildFile; fileRef = 5148D6A22FC0D78300A0186A /* Align.icon */; };
+		5148D6A42FC0D78300A0186A /* Align.icon in Resources */ = {isa = PBXBuildFile; fileRef = 5148D6A22FC0D78300A0186A /* Align.icon */; };
+		517B189F2FD1A72D00962FC3 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 517B189E2FD1A72D00962FC3 /* OnboardingView.swift */; };
+		517B18A12FD1C18F00962FC3 /* RowSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 517B18A02FD1C18F00962FC3 /* RowSectionView.swift */; };
+		51A1993E2FD71B3F00FACD95 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 51A1993D2FD71B3F00FACD95 /* Localizable.xcstrings */; };
+		51A1993F2FD772C000FACD95 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 51A1993D2FD71B3F00FACD95 /* Localizable.xcstrings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,12 +85,10 @@
 		5118ABED2FAAC9B800D8E9CF /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		5118ABEF2FAACFAE00D8E9CF /* EventRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventRow.swift; sourceTree = "<group>"; };
 		5118ABF12FAAD0FA00D8E9CF /* ReminderRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderRow.swift; sourceTree = "<group>"; };
-		5118AC432FAECF5700D8E9CF /* ReminderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderModel.swift; sourceTree = "<group>"; };
-		5118AC452FAECF6000D8E9CF /* EventModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventModel.swift; sourceTree = "<group>"; };
 		5118AD552FB0C05000D8E9CF /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
 		5118AD572FB225FF00D8E9CF /* ReminderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderView.swift; sourceTree = "<group>"; };
 		5118AD592FB25F8600D8E9CF /* EventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventView.swift; sourceTree = "<group>"; };
-		5118AD5B2FB26D6200D8E9CF /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		5118AD5B2FB26D6200D8E9CF /* Enums+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Enums+Extensions.swift"; sourceTree = "<group>"; };
 		5118AD612FB2B90200D8E9CF /* CalRemWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CalRemWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		5118AD632FB2B90200D8E9CF /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		5118AD652FB2B90200D8E9CF /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -95,9 +99,13 @@
 		5118AD832FB3A40200D8E9CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5118AD842FB3A40200D8E9CF /* UnifiedWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifiedWidget.swift; sourceTree = "<group>"; };
 		5118AD902FB3AFDF00D8E9CF /* ToggleReminderIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleReminderIntent.swift; sourceTree = "<group>"; };
-		5118AD9B2FB75A0F00D8E9CF /*   .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "  .swift"; sourceTree = "<group>"; };
+		5118AD9B2FB75A0F00D8E9CF /* EventKitDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventKitDataService.swift; sourceTree = "<group>"; };
 		5118AD9E2FB764AD00D8E9CF /* WeekGlanceWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekGlanceWidget.swift; sourceTree = "<group>"; };
-		5118AE212FBCA92100D8E9CF /* NotificationSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSelectionView.swift; sourceTree = "<group>"; };
+		5148D69F2FBFEAB900A0186A /* FocusWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusWidget.swift; sourceTree = "<group>"; };
+		5148D6A22FC0D78300A0186A /* Align.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = Align.icon; sourceTree = "<group>"; };
+		517B189E2FD1A72D00962FC3 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		517B18A02FD1C18F00962FC3 /* RowSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowSectionView.swift; sourceTree = "<group>"; };
+		51A1993D2FD71B3F00FACD95 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,10 +152,11 @@
 			isa = PBXGroup;
 			children = (
 				5118ABD62F9FA1EE00D8E9CF /* Assets.xcassets */,
+				51A1993D2FD71B3F00FACD95 /* Localizable.xcstrings */,
+				5148D6A22FC0D78300A0186A /* Align.icon */,
 				5118ABD72F9FA1EE00D8E9CF /* CalRem.entitlements */,
 				5118ABDB2F9FA1EE00D8E9CF /* Info.plist */,
 				5118ABD82F9FA1EE00D8E9CF /* CalRemApp.swift */,
-				5118AC472FAECF6500D8E9CF /* Model */,
 				5118ABE82FAAC34C00D8E9CF /* View */,
 				5118ABE52FA1709F00D8E9CF /* ViewModel */,
 			);
@@ -157,7 +166,7 @@
 		5118ABE52FA1709F00D8E9CF /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				5118AD5B2FB26D6200D8E9CF /* Enums.swift */,
+				5118AD5B2FB26D6200D8E9CF /* Enums+Extensions.swift */,
 				5118ABE62FA170AE00D8E9CF /* EventKitManager.swift */,
 				5118ABEB2FAAC4CD00D8E9CF /* PreferencesViewModel.swift */,
 				5118AD552FB0C05000D8E9CF /* MockData.swift */,
@@ -168,10 +177,11 @@
 		5118ABE82FAAC34C00D8E9CF /* View */ = {
 			isa = PBXGroup;
 			children = (
+				5118AC402FAE349100D8E9CF /* SubViews */,
 				5118ABD92F9FA1EE00D8E9CF /* ContentView.swift */,
+				517B189E2FD1A72D00962FC3 /* OnboardingView.swift */,
 				5118AE1F2FBCA5BD00D8E9CF /* List */,
 				5118AE202FBCA5C900D8E9CF /* Settings */,
-				5118AC402FAE349100D8E9CF /* SubViews */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -181,17 +191,9 @@
 			children = (
 				5118ABEF2FAACFAE00D8E9CF /* EventRow.swift */,
 				5118ABF12FAAD0FA00D8E9CF /* ReminderRow.swift */,
+				517B18A02FD1C18F00962FC3 /* RowSectionView.swift */,
 			);
 			path = SubViews;
-			sourceTree = "<group>";
-		};
-		5118AC472FAECF6500D8E9CF /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				5118AC432FAECF5700D8E9CF /* ReminderModel.swift */,
-				5118AC452FAECF6000D8E9CF /* EventModel.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		5118AD622FB2B90200D8E9CF /* Frameworks */ = {
@@ -207,7 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				5118AD812FB3A40200D8E9CF /* CalRemWidgetBundle.swift */,
-				5118AD9B2FB75A0F00D8E9CF /*   .swift */,
+				5118AD9B2FB75A0F00D8E9CF /* EventKitDataService.swift */,
 				5118AD9A2FB74E1200D8E9CF /* AppIntents */,
 				5118AD8C2FB3A40700D8E9CF /* Widgets */,
 				5118AD802FB3A40200D8E9CF /* Assets.xcassets */,
@@ -222,6 +224,7 @@
 				5118AD842FB3A40200D8E9CF /* UnifiedWidget.swift */,
 				5118AD822FB3A40200D8E9CF /* DayProgressWidget.swift */,
 				5118AD9E2FB764AD00D8E9CF /* WeekGlanceWidget.swift */,
+				5148D69F2FBFEAB900A0186A /* FocusWidget.swift */,
 			);
 			path = Widgets;
 			sourceTree = "<group>";
@@ -248,7 +251,6 @@
 			isa = PBXGroup;
 			children = (
 				5118ABE92FAAC46D00D8E9CF /* SettingsTab.swift */,
-				5118AE212FBCA92100D8E9CF /* NotificationSelectionView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -320,6 +322,7 @@
 			knownRegions = (
 				en,
 				Base,
+				fr,
 			);
 			mainGroup = 5118ABB62F9F852F00D8E9CF;
 			minimizedProjectReferenceProxies = 1;
@@ -339,6 +342,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5148D6A42FC0D78300A0186A /* Align.icon in Resources */,
+				51A1993E2FD71B3F00FACD95 /* Localizable.xcstrings in Resources */,
 				5118ABE22F9FA1EE00D8E9CF /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -347,7 +352,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5148D6A32FC0D78300A0186A /* Align.icon in Resources */,
 				5118AD862FB3A40200D8E9CF /* Assets.xcassets in Resources */,
+				51A1993F2FD772C000FACD95 /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -362,21 +369,21 @@
 				5118ABDE2F9FA1EE00D8E9CF /* CalRemApp.swift in Sources */,
 				5118AD5A2FB25F8600D8E9CF /* EventView.swift in Sources */,
 				5118AD582FB225FF00D8E9CF /* ReminderView.swift in Sources */,
-				5118AD5C2FB26D6500D8E9CF /* Enums.swift in Sources */,
+				5148D6A02FBFEAB900A0186A /* FocusWidget.swift in Sources */,
+				5118AD5C2FB26D6500D8E9CF /* Enums+Extensions.swift in Sources */,
 				5118AD8B2FB3A40200D8E9CF /* DayProgressWidget.swift in Sources */,
 				5118ABEC2FAAC4CD00D8E9CF /* PreferencesViewModel.swift in Sources */,
-				5118AD9D2FB75A0F00D8E9CF /*   .swift in Sources */,
+				5118AD9D2FB75A0F00D8E9CF /* EventKitDataService.swift in Sources */,
 				5118AD932FB3EF4D00D8E9CF /* UnifiedWidget.swift in Sources */,
 				5118AD9F2FB764AD00D8E9CF /* WeekGlanceWidget.swift in Sources */,
-				5118AE222FBCA92100D8E9CF /* NotificationSelectionView.swift in Sources */,
 				5118ABDF2F9FA1EE00D8E9CF /* ContentView.swift in Sources */,
 				5118ABF02FAACFAE00D8E9CF /* EventRow.swift in Sources */,
+				517B18A12FD1C18F00962FC3 /* RowSectionView.swift in Sources */,
 				5118ABEE2FAAC9B800D8E9CF /* ListView.swift in Sources */,
-				5118AC462FAECF6000D8E9CF /* EventModel.swift in Sources */,
-				5118AC442FAECF5700D8E9CF /* ReminderModel.swift in Sources */,
 				5118ABEA2FAAC46D00D8E9CF /* SettingsTab.swift in Sources */,
 				5118ABE72FA170AE00D8E9CF /* EventKitManager.swift in Sources */,
 				5118AD562FB0C05000D8E9CF /* MockData.swift in Sources */,
+				517B189F2FD1A72D00962FC3 /* OnboardingView.swift in Sources */,
 				5118AD922FB3AFDF00D8E9CF /* ToggleReminderIntent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -386,10 +393,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				5118AD882FB3A40200D8E9CF /* CalRemWidgetBundle.swift in Sources */,
+				5148D69B2FBD3A9500A0186A /* Enums+Extensions.swift in Sources */,
 				5118AD912FB3AFDF00D8E9CF /* ToggleReminderIntent.swift in Sources */,
 				5118AD892FB3A40200D8E9CF /* DayProgressWidget.swift in Sources */,
+				5148D6A12FBFEAB900A0186A /* FocusWidget.swift in Sources */,
 				5118ADA02FB764AD00D8E9CF /* WeekGlanceWidget.swift in Sources */,
-				5118AD9C2FB75A0F00D8E9CF /*   .swift in Sources */,
+				5118AD9C2FB75A0F00D8E9CF /* EventKitDataService.swift in Sources */,
 				5118AD8A2FB3A40200D8E9CF /* UnifiedWidget.swift in Sources */,
 				5118AD7B2FB36CF600D8E9CF /* PreferencesViewModel.swift in Sources */,
 				5118AD7A2FB36B2400D8E9CF /* EventKitManager.swift in Sources */,
@@ -410,8 +419,9 @@
 		5118ABCE2F9F853100D8E9CF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = Align;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = CalRem/CalRem.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -419,7 +429,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CalRem/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "";
+				INFOPLIST_KEY_CFBundleDisplayName = Align;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "App needs access to Calendar to sync events.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -449,8 +459,9 @@
 		5118ABCF2F9F853100D8E9CF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = Align;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = CalRem/CalRem.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -458,7 +469,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CalRem/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "";
+				INFOPLIST_KEY_CFBundleDisplayName = Align;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "App needs access to Calendar to sync events.";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -545,6 +556,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -602,6 +614,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

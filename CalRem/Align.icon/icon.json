@@ -1,44 +1,42 @@
 {
   "fill" : {
-    "solid" : "srgb:1.00000,1.00000,1.00000,1.00000"
+    "solid" : "srgb:0.74118,0.84706,0.91373,1.00000"
   },
   "groups" : [
     {
       "layers" : [
         {
+          "blend-mode" : "normal",
           "fill" : {
-            "solid" : "srgb:0.01680,0.19835,1.00000,0.70000"
+            "solid" : "display-p3:0.03922,0.25490,0.45490,1.00000"
           },
-          "image-name" : "checkmark 2.svg",
-          "name" : "checkmark 2",
+          "glass" : false,
+          "image-name" : "checkmark.svg",
+          "name" : "checkmark",
           "position" : {
-            "scale" : 1,
+            "scale" : 0.8,
             "translation-in-points" : [
-              5.5056083965610014e-05,
-              116.52800961556773
+              0,
+              139.0889090685913
             ]
           }
         },
         {
+          "blend-mode" : "normal",
           "fill" : {
-            "solid" : "srgb:1.00000,0.14913,0.00000,0.70000"
+            "solid" : "srgb:0.03922,0.25490,0.45490,1.00000"
           },
-          "image-name" : "top 2.svg",
-          "name" : "top 2",
+          "glass" : false,
+          "hidden" : false,
+          "image-name" : "top.svg",
+          "name" : "top",
           "position" : {
             "scale" : 1,
             "translation-in-points" : [
-              -5.5056083965610014e-05,
-              -275
+              0,
+              -362
             ]
           }
-        },
-        {
-          "fill" : {
-            "solid" : "srgb:0.66422,0.66424,0.66423,0.70000"
-          },
-          "image-name" : "calendar 2.svg",
-          "name" : "calendar 2"
         }
       ],
       "shadow" : {

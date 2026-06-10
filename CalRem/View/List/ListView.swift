@@ -11,38 +11,53 @@ import WidgetKit
 
 struct ListView: View {
 	
-	@Bindable var ekManager: EventKitManager
+	@Environment(EventKitManager.self) var ekManager
+	@Environment(\.scenePhase) private var scenePhase
+	@Namespace private var present
+	
 	@State private var eventType: EventType?
 	@State private var showErrorAlert: Bool = false
 	@State private var errorMessage: String = ""
 	
-	@State private var showEventView: Bool = false
-	@State private var selectedEvent: EKEvent?
-	@State private var showReminderView: Bool = false
-	@State private var selectedReminder: EKReminder?
-		
+	@State private var showAddEvent: Bool = false
+	@State private var showAddReminder: Bool = false
+	@State private var eventToEdit: EKEvent?
+	@State private var reminderToEdit: EKReminder?
+	
+	@State private var selectedDate: Date = .now
+	var preferences = PreferencesViewModel.shared
+	
 	var body: some View {
+		@Bindable var ekManager = ekManager
 		NavigationStack {
 			Group {
-				if ekManager.unifiedItems.isEmpty {
-					ContentUnavailableView("Nothing Scheduled", systemImage: "tray", description: Text(""))
-				} else {
+				if ekManager.isLoading {
+					Color.clear
+				}
+				else if !ekManager.calendarGranted && !ekManager.reminderGranted {
+					ContentUnavailableView("Access Required", systemImage: "lock.fill", description: Text("Calendar and Reminder access needed."))
+				}
+				else if ekManager.unifiedItems.isEmpty {
+					ContentUnavailableView("Nothing Scheduled", systemImage: "tray", description: Text("You have nothing scheduled for next \(preferences.upcomingDaysLimit) days."))
+				}
+				else {
 					itemList
 				}
 			}
-			.navigationTitle("Upcoming")
-			.task {
-				if !ekManager.permissionGranted {
-					await ekManager.requestPermission()
-					WidgetCenter.shared.reloadAllTimelines()
-				}
-				await ekManager.refresh()
+			.navigationTitle("Schedule")
+			.sheet(isPresented: $showAddReminder) {
+				ReminderView(ekManager: ekManager, existingReminder: nil, mode: .add)
 			}
-			.sheet(isPresented: $showReminderView, onDismiss: { selectedReminder = nil }) {
-				ReminderView(ekManager: ekManager, existingReminder: selectedReminder, mode: selectedReminder == nil ? .add : .edit)
+			.sheet(item: $reminderToEdit) { reminder in
+				ReminderView(ekManager: ekManager, existingReminder: reminder, mode: .edit)
+					.navigationTransition(.zoom(sourceID: "reminder", in: present))
 			}
-			.sheet(isPresented: $showEventView, onDismiss: { selectedEvent = nil }) {
-				EventView(ekManager: ekManager, existingEvent: selectedEvent, mode: selectedEvent == nil ? .add : .edit)
+			.sheet(isPresented: $showAddEvent) {
+				EventView(ekManager: ekManager, existingEvent: nil, mode: .add)
+			}
+			.sheet(item: $eventToEdit) { event in
+				EventView(ekManager: ekManager, existingEvent: event, mode: .edit)
+					.navigationTransition(.zoom(sourceID: "event", in: present))
 			}
 			.toolbar { toolbarContent }
 			.alert("Deletion Failed", isPresented: $showErrorAlert) {
@@ -63,21 +78,23 @@ struct ListView: View {
 							switch item {
 								case .event(let event):
 									EventRow(event: event, ekManager: ekManager)
+										.contentShape(Rectangle())
 										.onTapGesture {
-											selectedEvent = event
-											showEventView = true
+											eventToEdit = event
 										}
+										.sensoryFeedback(.selection, trigger: eventToEdit)
 									
 								case .reminder(let reminder):
 									ReminderRow(reminder: reminder, ekManager: ekManager)
+										.contentShape(Rectangle())
 										.onTapGesture {
-											selectedReminder = reminder
-											showReminderView = true
+											reminderToEdit = reminder
 										}
+										.sensoryFeedback(.selection, trigger: reminderToEdit)
 								}
 						}
-						.listRowSeparator(.visible)
-						.listRowInsets(EdgeInsets(top: 8, leading: 32, bottom: 8, trailing: 32))
+						.listRowSeparator(.hidden)
+						.listRowInsets(EdgeInsets(top: 4, leading: 32, bottom: 16, trailing: 32))
 
 							// MARK: SwipeActions
 						.swipeActions(edge: .trailing, allowsFullSwipe: false) {
@@ -128,19 +145,14 @@ struct ListView: View {
 					}
 				} header: {
 					HStack(alignment: .firstTextBaseline) {
-					   Text(formatSectionDate(group.date))
-						   .font(.system(size: 14, weight: .bold, design: .rounded))
-						   .foregroundStyle(.primary)
-						   .textCase(nil)
+					    Text(formatSectionDate(group.date))
+								.textCase(nil)
 						Spacer()
-					   Text("\(group.items.count)")
-						   .font(.system(size: 14, weight: .semibold, design: .rounded))
-						   .foregroundStyle(.primary)
-		
+						Text("\(group.items.count)")
 				   }
-				   .padding(.horizontal, 16)
-				   .padding(.top, 12)
-				   .padding(.bottom, 4)
+					.font(.system(size: 16, weight: .semibold, design: .rounded))
+					.foregroundStyle(.secondary)
+					.padding(.horizontal, 8)
 				}
 			}
 		}
@@ -156,14 +168,14 @@ struct ListView: View {
 			Menu {
 				Button {
 					eventType = .calendar
-					showEventView = true
+					showAddEvent = true
 				} label: {
 					Label("New Event", systemImage: "calendar")
 				}
 				
 				Button {
 					eventType = .reminder
-					showReminderView = true
+					showAddReminder = true
 				} label: {
 					Label("New Reminder", systemImage: "checklist")
 				}
@@ -185,5 +197,6 @@ struct ListView: View {
 }
 
 #Preview {
-	ListView(ekManager: EventKitManager())
+	ListView()
+		.environment(EventKitManager())
 }

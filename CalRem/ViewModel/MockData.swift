@@ -44,7 +44,7 @@ struct MockData {
 		event.startDate = Date(timeIntervalSinceNow: 3600)
 		event.endDate = Date(timeIntervalSinceNow: 7200)
 		event.notes = "Discuss Q3 plans"
-		event.isAllDay = true
+		event.isAllDay = false
 		let calendar = EKCalendar(for: .event, eventStore: store)
 		calendar.title = "Work"
 		calendar.cgColor = UIColor.systemBlue.cgColor

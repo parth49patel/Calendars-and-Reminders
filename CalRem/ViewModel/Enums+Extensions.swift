@@ -54,3 +54,11 @@ enum CalendarItem: Identifiable {
 		}
 	}
 }
+
+extension EKEvent: Identifiable {
+	public var id: String { self.calendarItemIdentifier }
+}
+
+extension EKReminder: Identifiable {
+	public var id: String { self.calendarItemIdentifier }
+}

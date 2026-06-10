@@ -7,13 +7,26 @@
 
 import SwiftUI
 import SwiftData
+import EventKit
 
 @main
 struct CalRemApp: App {
-    var body: some Scene {
+	
+	@AppStorage("onboardingCompleted") private var onboardingCompleted: Bool = false
+	@State private var ekManager = EventKitManager()
+   
+	var body: some Scene {
         WindowGroup {
-			ContentView()
-				.fontDesign(.rounded)
-        }
+			if onboardingCompleted {
+				ContentView()
+					.environment(ekManager)
+					.task {
+						await ekManager.requestPermission()
+					}
+			} else {
+				OnboardingView()
+					.environment(ekManager)
+			}
+		}
     }
 }

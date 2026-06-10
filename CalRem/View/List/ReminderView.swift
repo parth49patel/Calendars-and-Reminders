@@ -13,11 +13,15 @@ struct ReminderView: View {
 	
 	@State private var reminder: EKReminder?
 	@Environment(\.dismiss) private var dismiss
-	
+	@FocusState private var focusedField: Bool
+
 	var ekManager: EventKitManager
 	var existingReminder: EKReminder?
 	var mode: EventViewMode = .add
 	var isEditing: Bool { mode == .edit }
+	
+	@State private var showErrorAlert: Bool = false
+	@State private var errorMessage: String = ""
 	
 	@State private var title: String = ""
 	@State private var hasDueDate: Bool = false
@@ -28,29 +32,108 @@ struct ReminderView: View {
 	
     var body: some View {
 		NavigationStack {
-			Form {
-				Section {
-					TextField("Title", text: $title)
-						.bold()
-				}
-				
-				Section {
-					Toggle("Due Date", isOn: $hasDueDate)
-						.bold()
-					if hasDueDate {
-						DatePicker("Date & Time", selection: $dueDate, displayedComponents: [.date, .hourAndMinute])
+			VStack {
+				Form {
+					Section {
+						TextField("Title", text: $title, axis: .vertical)
+							.font(.system(size: 20, weight: .semibold, design: .rounded))
+							.lineLimit(3)
+							.focused($focusedField)
+					}
+					if isEditing, let existing = existingReminder {
+						Section {
+							Toggle(isOn: $hasDueDate) {
+								Label(hasDueDate ? "Due Date" : "No Due Date", systemImage: "calendar.badge.clock")
+									.font(.system(size: 18, weight: .medium, design: .rounded))
+							}
+							if hasDueDate {
+								DatePicker(selection: $dueDate, displayedComponents: [.date, .hourAndMinute]) {
+									Label("Date & Time", systemImage: "clock")
+										.font(.system(size: 18, weight: .medium, design: .rounded))
+								}
+							}
+							
+						}
+						.disabled(existing.isCompleted)
+						
+						
+					} else {
+						Section {
+							Toggle(isOn: $hasDueDate) {
+								Label("Due Date", systemImage: "calendar.badge.clock")
+									.font(.system(size: 18, weight: .medium, design: .rounded))
+							}
+							if hasDueDate {
+								DatePicker(selection: $dueDate, displayedComponents: [.date, .hourAndMinute]) {
+									Label("Date & Time", systemImage: "clock")
+										.font(.system(size: 18, weight: .medium, design: .rounded))
+								}
+							}
+						}
+					}
+					
+					Section {
+						TextField("Notes", text: $notes, axis: .vertical)
+							.font(.system(size: 18, weight: .medium, design: .rounded))
+							.lineLimit(4...8)
+					}
+					Section {
+						if let existing = existingReminder, let createDate = existing.creationDate, let modifyDate = existing.lastModifiedDate {
+						HStack {
+							Label(existing.isCompleted ? "Completed" : "Not Completed",
+								  systemImage: existing.isCompleted ? "checkmark.circle.fill" : "circle"
+							)
+							.font(.system(size: 18, weight: .medium, design: .rounded))
+							.foregroundStyle(existing.isCompleted ? .green : .secondary)
+							
+							if let completionDate = existing.completionDate {
+								Spacer()
+								Text(completionDate.formatted(date: .abbreviated, time: .shortened))
+									.font(.system(size: 16, weight: .medium, design: .rounded))
+									.foregroundStyle(.secondary)
+							}
+						}
+						
+						HStack {
+							Label("Created", systemImage: "pencil.tip.crop.circle.badge.plus.fill")
+								.font(.system(size: 18, weight: .medium, design: .rounded))
+								.foregroundStyle(.secondary)
+							
+							Spacer()
+							Text(createDate.formatted(date: .abbreviated, time: .shortened))
+								.font(.system(size: 16, weight: .medium, design: .rounded))
+								.foregroundStyle(.secondary)
+						}
+						if createDate != modifyDate {
+							HStack {
+								Label("Last Modified", systemImage: "square.and.pencil")
+									.font(.system(size: 18, weight: .medium, design: .rounded))
+									.foregroundStyle(.secondary)
+								
+								Spacer()
+								
+								Text(modifyDate.formatted(date: .abbreviated, time: .shortened))
+									.font(.system(size: 16, weight: .medium, design: .rounded))
+									.foregroundStyle(.secondary)
+							}
+						}
 					}
 				}
-				
-				Section {
-					TextField("Notes", text: $notes, axis: .vertical)
-						.lineLimit(4...8)
 				}
 			}
+			.scrollDismissesKeyboard(.immediately)
 			.navigationTitle(isEditing ? "Details" : "New Reminder")
 			.navigationBarTitleDisplayMode(.inline)
+			.alert("Deletion Failed", isPresented: $showErrorAlert) {
+				Button("OK", role: .cancel) { }
+			} message: {
+				 Text("The reminder could not be deleted. Please try again. \n\nDetails: \(errorMessage)")
+			}
 			.toolbar { toolbarContent }
-			.onAppear { load() }
+			.onAppear {
+				focusedField = true
+				load()
+			}
 		}
     }
 	
@@ -72,6 +155,25 @@ struct ReminderView: View {
 				dismiss()
 			}
 			.sensoryFeedback(.stop, trigger: closed)
+		}
+		if let reminder = existingReminder {
+			ToolbarItem(placement: .bottomBar) {
+				Button("Delete Reminder", role: .destructive) {
+					Task {
+						do {
+							try ekManager.store.remove(reminder, commit: true)
+							await ekManager.refresh()
+							WidgetCenter.shared.reloadAllTimelines()
+						} catch {
+							await MainActor.run {
+								errorMessage = error.localizedDescription
+								showErrorAlert = true
+							}
+						}
+					}
+				}
+				.tint(.red)
+			}
 		}
 	}
 	

@@ -14,5 +14,6 @@ struct CalRemWidgetBundle: WidgetBundle {
 		UnifiedWidget()
 		DayProgressWidget()
 		WeekGlanceWidget()
+		FocusWidget()
     }
 }

@@ -8,43 +8,39 @@
 import SwiftUI
 import SwiftData
 import EventKit
+import WidgetKit
 
 struct ContentView: View {
-
-	@State private var ekManager = EventKitManager()
+	
+	@Environment(EventKitManager.self) var ekManager
 	@Environment(\.scenePhase) private var scenePhase
 	
 	var body: some View {
 		TabView {
 			Tab("Events", systemImage: "calendar.day.timeline.trailing") {
-				ListView(ekManager: ekManager)
+				ListView()
 			}
 			Tab("Settings", systemImage: "gearshape") {
-				SettingsTab(ekManager: ekManager)
+				SettingsTab()
 			}
 		}
 		.tabViewStyle(.sidebarAdaptable)
-		.tabViewSidebarBottomBar {
-			Image(systemName: "plus")
-		}
 		.task {
+			WidgetCenter.shared.reloadAllTimelines()
 			await ekManager.refresh()
 		}
-//		.onChange(of: scenePhase) {
-//			if scenePhase == .active {
-//				Task {
-//					await ekManager.refresh()
-//				}
-//			}
-//		}
-//		.onReceive(NotificationCenter.default.publisher(for: .EKEventStoreChanged)) { _ in
-//			Task {
-//				await ekManager.refresh()
-//			}
-//		}
+		.onChange(of: scenePhase) { oldPhase, newPhase in
+			if newPhase == .active {
+				Task {
+					await ekManager.refresh()
+					WidgetCenter.shared.reloadAllTimelines()
+				}
+			}
+		}
 	}
 }
 
 #Preview {
     ContentView()
+		.environment(EventKitManager())
 }

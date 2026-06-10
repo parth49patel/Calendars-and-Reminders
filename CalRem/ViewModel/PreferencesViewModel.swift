@@ -11,31 +11,26 @@ import Foundation
 class PreferencesViewModel {
 	
 	static let shared = PreferencesViewModel()
-	private let defaults = UserDefaults(suiteName: "group.com.pp.CalRem") ?? .standard
+	private let defaults = UserDefaults(suiteName: "") ?? .standard
 	
 	init() {
-		let stored = UserDefaults.standard.stringArray(forKey: "selectedCalendarIdentifiers")
+		let stored = defaults.stringArray(forKey: "selectedCalendarIdentifiers")
 		self.selectedCalendarIdentifiers = Set(stored ?? [])
 		
-		let storedLimit = UserDefaults.standard.integer(forKey: "upcomingDaysLimit")
+		let storedLimit = defaults.integer(forKey: "upcomingDaysLimit")
 		self.upcomingDaysLimit = storedLimit == 0 ? 7 : storedLimit
 	}
 	
 	var selectedCalendarIdentifiers: Set<String> {
 		didSet {
 			let array = Array(selectedCalendarIdentifiers)
-			UserDefaults.standard.set(array, forKey: "selectedCalendarIdentifiers")
+			defaults.set(array, forKey: "selectedCalendarIdentifiers")
 		}
 	}
 	
 	var upcomingDaysLimit: Int {
 		didSet {
-			UserDefaults.standard.set(upcomingDaysLimit, forKey: "upcomingDaysLimit")
+			defaults.set(upcomingDaysLimit, forKey: "upcomingDaysLimit")
 		}
-	}
-	
-	var hasRunFirstLaunchSetup: Bool {
-		get { UserDefaults.standard.bool(forKey: "hasRunFirstLaunchSetup") }
-		set { UserDefaults.standard.set(newValue, forKey: "hasRunFirstLaunchSetup") }
 	}
 }

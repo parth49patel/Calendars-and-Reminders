@@ -120,7 +120,7 @@ struct WeekGlanceWidgetView: View {
     var body: some View {
 		Group {
 			if !entry.permissionGranted {
-				ContentUnavailableView("Permission Not Granted", systemImage: "lock", description: Text("Calendar and Reminder access needed."))
+				ContentUnavailableView("Access Denied", systemImage: "lock", description: Text("Calendar and Reminder access needed."))
 			} else {
 				switch family {
 					case .systemLarge: largeView
@@ -229,7 +229,7 @@ struct WeekGlanceWidget: Widget {
 	var body: some WidgetConfiguration {
 		StaticConfiguration(kind: kind, provider: WeekGlanceTimelineProvider()) { entry in
 			WeekGlanceWidgetView(entry: entry)
-				.containerBackground(Color(.secondarySystemFill), for: .widget)
+				.containerBackground(.accent.quinary.opacity(0.5), for: .widget)
 		}
 		.configurationDisplayName("Week Glance")
 		.description("See your events and reminders for the week.")

@@ -13,11 +13,15 @@ struct EventView: View {
 	
 	@State private var event: EKEvent?
 	@Environment(\.dismiss) private var dismiss
-	
+	@FocusState private var focusedField: Bool
+
 	var ekManager: EventKitManager
 	var existingEvent: EKEvent?
 	var mode: EventViewMode = .add
 	var isEditing: Bool { mode == .edit }
+	
+	@State private var showErrorAlert: Bool = false
+	@State private var errorMessage: String = ""
 	
 	@State private var title: String = ""
 	@State private var isAllDay: Bool = false
@@ -32,25 +36,49 @@ struct EventView: View {
 		NavigationStack {
 			Form {
 				Section {
-					TextField("Title", text: $title)
+					TextField("Title", text: $title, axis: .vertical)
+						.font(.system(size: 20, weight: .semibold, design: .rounded))
+						.lineLimit(3)
+						.focused($focusedField)
 				}
 				
 				Section {
-					Toggle("All Day", isOn: $isAllDay)
+					Toggle(isOn: $isAllDay) {
+						Label("All Day", systemImage: "sun.max.fill")
+							.font(.system(size: 18, weight: .medium, design: .rounded))
+					}
+					
 					if !isAllDay {
-						DatePicker("Start", selection: $startDate, displayedComponents: [.date, .hourAndMinute])
-						DatePicker("End", selection: $endDate, displayedComponents: [.date, .hourAndMinute])
+						DatePicker(selection: $startDate, displayedComponents: [.date, .hourAndMinute]) {
+							Label("Start", systemImage: "clock")
+								.font(.system(size: 18, weight: .medium, design: .rounded))
+						}
+						DatePicker(selection: $endDate, displayedComponents: [.date, .hourAndMinute]) {
+							Label("End", systemImage: "clock.badge.checkmark")
+								.font(.system(size: 18, weight: .medium, design: .rounded))
+						}
 					} else {
-						DatePicker("Start", selection: $startDate, displayedComponents: [.date])
+						DatePicker(selection: $startDate, displayedComponents: [.date]) {
+							Label("Date", systemImage: "calendar.badge.checkmark.rtl")
+								.font(.system(size: 18, weight: .medium, design: .rounded))
+						}
+						DatePicker(selection: $endDate, displayedComponents: [.date]) {
+							Label("Date", systemImage: "calendar.badge.checkmark")
+								.font(.system(size: 18, weight: .medium, design: .rounded))
+						}
 					}
 				}
+				
 				Section {
-					Picker("Calendar", selection: $selectedCalendar) {
+					Picker(selection: $selectedCalendar) {
 						ForEach(ekManager.availableCalendars, id: \.calendarIdentifier) { calendar in
-							Text("\(calendar.title)")
+							Text(calendar.title)
 								.foregroundStyle(Color(cgColor: calendar.cgColor))
 								.tag(Optional(calendar))
 						}
+					} label: {
+						Label("Calendar", systemImage: "ellipsis.calendar")
+							.font(.system(size: 18, weight: .medium, design: .rounded))
 					}
 					.pickerStyle(.menu)
 					.disabled(isEditing)
@@ -58,12 +86,51 @@ struct EventView: View {
 				Section {
 					TextField("Notes", text: $notes, axis: .vertical)
 						.lineLimit(4...8)
+						.font(.system(size: 18, weight: .medium, design: .rounded))
+						.foregroundStyle(.primary)
+				}
+				
+				Section {
+					if let existing = existingEvent, let createDate = existing.creationDate, let modifyDate = existing.lastModifiedDate {
+						HStack {
+							Label("Created", systemImage: "pencil.tip.crop.circle.badge.plus.fill")
+								.font(.system(size: 18, weight: .medium, design: .rounded))
+								.foregroundStyle(.secondary)
+							
+							Spacer()
+							Text(createDate.formatted(date: .abbreviated, time: .shortened))
+								.font(.system(size: 16, weight: .medium, design: .rounded))
+								.foregroundStyle(.secondary)
+						}
+						if createDate != modifyDate {
+							HStack {
+								Label("Last Modified", systemImage: "square.and.pencil")
+									.font(.system(size: 18, weight: .medium, design: .rounded))
+									.foregroundStyle(.secondary)
+								
+								Spacer()
+								
+								Text(modifyDate.formatted(date: .abbreviated, time: .shortened))
+									.font(.system(size: 16, weight: .medium, design: .rounded))
+									.foregroundStyle(.secondary)
+							}
+						}
+					}
 				}
 			}
+			.scrollDismissesKeyboard(.immediately)
 			.navigationTitle(isEditing ? "Edit Event" : "Add Event")
 			.navigationBarTitleDisplayMode(.inline)
+			.alert("Deletion Failed", isPresented: $showErrorAlert) {
+				Button("OK", role: .cancel) { }
+			} message: {
+				 Text("The event could not be deleted. Please try again. \n\nDetails: \(errorMessage)")
+			}
 			.toolbar { toolbarContent }
-			.onAppear { load() }
+			.onAppear {
+				focusedField = true
+				load()
+			}
 		}
     }
 	
@@ -86,6 +153,26 @@ struct EventView: View {
 			}
 			.sensoryFeedback(.stop, trigger: closed)
 		}
+		if let event = existingEvent {
+			ToolbarItem(placement: .bottomBar) {
+				Button("Delete Event", role: .destructive) {
+					Task {
+						do {
+							try ekManager.store.remove(event, span: .thisEvent, commit: true)
+							await ekManager.refresh()
+							WidgetCenter.shared.reloadAllTimelines()
+						} catch {
+							await MainActor.run {
+								errorMessage = error.localizedDescription
+								showErrorAlert = true
+							}
+						}
+					}
+				}
+				.tint(.red)
+			}
+		}
+
 	}
 	
 	private func load() {

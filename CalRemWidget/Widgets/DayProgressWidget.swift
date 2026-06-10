@@ -75,7 +75,7 @@ struct DayProgressWidgetEntryView: View {
 	var body: some View {
 		Group {
 			if !entry.permissionGranted {
-				ContentUnavailableView("Permission Not Granted", systemImage: "lock", description: Text("Calendar and Reminder access needed."))
+				ContentUnavailableView("Access Required", systemImage: "lock", description: Text("Calendar and Reminder access needed."))
 			} else if entry.totalItems == 0 {
 				emptyView
 			} else  {
@@ -87,9 +87,9 @@ struct DayProgressWidgetEntryView: View {
 	@ViewBuilder
 	private var emptyView: some View {
 		VStack(spacing: 6) {
-			Image(systemName: "sparkles")
+			Image(systemName: "checkmark.circle.fill")
 				.font(.system(size: 30, weight: .medium))
-			Text("Nothing today")
+			Text("All done!")
 				.font(.system(size: 18, weight: .semibold, design: .rounded))
 		}
 		.frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -132,7 +132,7 @@ struct DayProgressWidget: Widget {
 	var body: some WidgetConfiguration {
 		StaticConfiguration(kind: kind, provider: DayProgressWidgetProvider()) { entry in
 			DayProgressWidgetEntryView(entry: entry)
-				.containerBackground(Color(.secondarySystemFill), for: .widget)
+				.containerBackground(.accent.quinary, for: .widget)
 		}
 		.configurationDisplayName("Day Progress")
 		.description("Track how much of your day is done.")
